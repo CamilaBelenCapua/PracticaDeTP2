@@ -53,20 +53,18 @@ app.post('/api/inventors', (req, res) => {
 // PUT /api/inventors/:id  --> actualiza las propiedades de un inventor segund ID
 app.put('/api/inventors/:id', (req, res) => {
     try{
-        const id = parseInt(req.params.id);
-        const inventors = fs.readFileSync('./inventors.json', 'utf-8');
-        const inventores = JSON.parse(inventors);
+        const id = parseInt(req.params.id); //Porque cuando lo mando por POSTMAN es un String
+        const inventors = JSON.parse(fs.readFileSync('./inventors.json', 'utf-8'));
         const newInventor = req.body
-        inventores.forEach(element => {
-            if(element._id === id){
-                element._id = newInventor._id
-                element.first = newInventor.first
-                element.last = newInventor.last
-                element.year = newInventor.year
-            }
-        });
-        fs.writeFileSync('./inventors.json', JSON.stringify(inventores, null, ' '));
-        res.json(inventores)
+        const inventorID = inventors.filter(inventor => inventor._id === newInventor._id);
+
+        if(inventorID.length>0){
+            inventorID[0].first = newInventor.first;
+            inventorID[0].last = newInventor.last;
+            inventorID[0].year = newInventor.year;
+            fs.writeFileSync('./inventors.json', JSON.stringify(inventors));
+        }
+        res.json(inventors)
     }catch(err){
         res.sendStatus(400).json(err)
     }
