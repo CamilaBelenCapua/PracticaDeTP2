@@ -30,7 +30,7 @@ async function addInventor(inventor){
     return result;
 }
 
-// TODO: updateInventor(inventor)
+//updateInventor(inventor)
 
 async function updateInventor(inventor){
     const clientMongo = await connection.getConnection();
@@ -42,7 +42,7 @@ async function updateInventor(inventor){
 
 }
 
-// TODO: deleteInventor(id)
+//deleteInventor(id)
 
 async function deleteInventor(id){
     const clientMongo = await connection.getConnection();
